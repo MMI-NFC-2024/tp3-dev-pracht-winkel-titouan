@@ -7,12 +7,12 @@ import GraphicSpecies from "../components/GraphicSpecies.astro";
     <div class="max-w-6xl mx-auto p-6">
         <h1 class="text-3xl font-bold text-center mb-8">All Penguin Species</h1>
 
-        <!-- Menu remplacé par un select -->
+        <!-- Select local pour carousel -->
         <nav class="flex justify-center mb-6">
-            <label for="species" class="mr-2 font-semibold"
+            <label for="carousel-species" class="mr-2 font-semibold"
                 >Choisir une espèce :</label
             >
-            <select id="species" class="border rounded px-2 py-1">
+            <select id="carousel-species" class="border rounded px-2 py-1">
                 <option value="">-- Sélectionner --</option>
                 <option value="Adelie">Adelie</option>
                 <option value="Gentoo">Gentoo</option>
@@ -20,8 +20,8 @@ import GraphicSpecies from "../components/GraphicSpecies.astro";
             </select>
         </nav>
 
-        <!-- Slider -->
         <div
+            id="carousel"
             class="flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-4"
         >
             <section
@@ -56,36 +56,30 @@ import GraphicSpecies from "../components/GraphicSpecies.astro";
         </div>
     </div>
 
-    <!-- Script côté client -->
+    <!-- Script local pour carousel -->
     <script is:inline>
         document.addEventListener("DOMContentLoaded", () => {
-            const select = document.getElementById("species");
+            const select = document.getElementById("carousel-species");
             if (!select) return;
+
+            function goTo(value) {
+                if (!value) return;
+                location.hash = value;
+                const target = document.getElementById(value);
+                if (target) target.scrollIntoView({ behavior: "smooth" });
+            }
 
             // Pré-sélection si hash présent
             if (location.hash) {
-                const current = location.hash.slice(1);
-                if ([...select.options].some((o) => o.value === current)) {
-                    select.value = current;
-                    document
-                        .getElementById(current)
-                        ?.scrollIntoView({ behavior: "smooth" });
+                const cur = location.hash.slice(1);
+                if ([...select.options].some((o) => o.value === cur)) {
+                    select.value = cur;
+                    goTo(cur);
                 }
             }
 
-            // Scroll vers la section choisie au changement
-            select.addEventListener("change", (evt) => {
-                const value = evt.target.value;
-                if (value) {
-                    location.hash = value;
-                    const target = document.getElementById(value);
-                    if (target) {
-                        target.scrollIntoView({ behavior: "smooth" });
-                    } else {
-                        console.warn("Section introuvable:", value);
-                    }
-                }
-            });
+            // Événements
+            select.addEventListener("change", (e) => goTo(e.target.value));
         });
     </script>
 </Layout>

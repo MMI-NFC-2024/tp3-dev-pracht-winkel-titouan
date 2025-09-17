@@ -30,6 +30,7 @@ import "../styles/global.css";
         select.addEventListener("change", (evt) => {
           const value = evt.target.value;
           if (value) {
+            // Redirection uniquement, pas de scroll
             location.pathname = "/species/" + value;
           }
         });
