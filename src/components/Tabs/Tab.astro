@@ -1,0 +1,19 @@
+---
+import { onMount } from "solid-js";
+const { selected = false, class: className = "", ...rest } = Astro.props;
+let el;
+
+onMount(() => {
+    if (selected) {
+        el.setAttribute("aria-selected", "true");
+        el.tabIndex = 0;
+    } else {
+        el.setAttribute("aria-selected", "false");
+        el.tabIndex = -1;
+    }
+});
+---
+
+<button bind:this={el} role="tab" class={className} {...rest}>
+    <slot />
+</button>

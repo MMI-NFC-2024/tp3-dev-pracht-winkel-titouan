@@ -1,0 +1,119 @@
+---
+import Layout from "../layouts/Layout.astro";
+import GraphicSpecies from "../components/GraphicSpecies.astro";
+---
+
+<Layout>
+    <div class="max-w-6xl mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-8">All Penguin Species</h1>
+
+        <!-- Onglets -->
+        <div class="tabs">
+            <!-- Boutons onglets -->
+            <div class="flex justify-center gap-4 mb-6">
+                <button
+                    class="tab-btn !px-4 !py-2 !bg-blue-500 !text-white !rounded"
+                    data-target="Adelie">Adelie</button
+                >
+                <button
+                    class="tab-btn !px-4 !py-2 !bg-green-500 !text-white !rounded"
+                    data-target="Gentoo">Gentoo</button
+                >
+                <button
+                    class="tab-btn !px-4 !py-2 !bg-red-500 !text-white !rounded"
+                    data-target="Chinstrap">Chinstrap</button
+                >
+            </div>
+
+            <!-- Contenu des panels -->
+            <div class="tab-content">
+                <div
+                    id="Adelie"
+                    class="tab-panel !p-4 !bg-gray-50 !rounded-lg !shadow"
+                >
+                    <h2
+                        class="text-xl font-bold mb-4 text-center text-blue-600"
+                    >
+                        Adelie
+                    </h2>
+                    <GraphicSpecies species="Adelie" />
+                </div>
+
+                <div
+                    id="Gentoo"
+                    class="tab-panel !hidden !p-4 !bg-gray-50 !rounded-lg !shadow"
+                >
+                    <h2
+                        class="text-xl font-bold mb-4 text-center text-green-600"
+                    >
+                        Gentoo
+                    </h2>
+                    <GraphicSpecies species="Gentoo" />
+                </div>
+
+                <div
+                    id="Chinstrap"
+                    class="tab-panel !hidden !p-4 !bg-gray-50 !rounded-lg !shadow"
+                >
+                    <h2 class="text-xl font-bold mb-4 text-center text-red-600">
+                        Chinstrap
+                    </h2>
+                    <GraphicSpecies species="Chinstrap" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script pour gérer les onglets -->
+    <script is:inline>
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".tab-btn");
+            const panels = document.querySelectorAll(".tab-panel");
+
+            function showPanel(target) {
+                // Masquer tous les panels
+                panels.forEach((p) => p.classList.add("hidden"));
+                // Afficher le panel correspondant
+                const panel = document.getElementById(target);
+                if (panel) panel.classList.remove("hidden");
+
+                // Mettre à jour l'état actif des boutons
+                buttons.forEach((btn) => {
+                    if (btn.dataset.target === target) {
+                        btn.classList.add("!opacity-100");
+                    } else {
+                        btn.classList.remove("!opacity-100");
+                    }
+                });
+
+                // Mettre à jour le hash pour partage / back-forward
+                location.hash = target;
+            }
+
+            // Événement sur les onglets
+            buttons.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const target = btn.dataset.target;
+                    showPanel(target);
+                });
+            });
+
+            // Pré-sélection si hash présent
+            if (location.hash) {
+                const cur = location.hash.slice(1);
+                if (
+                    [...Array.from(buttons)].some(
+                        (btn) => btn.dataset.target === cur,
+                    )
+                ) {
+                    showPanel(cur);
+                } else {
+                    showPanel("Adelie");
+                }
+            } else {
+                // Premier panel par défaut
+                showPanel("Adelie");
+            }
+        });
+    </script>
+</Layout>
