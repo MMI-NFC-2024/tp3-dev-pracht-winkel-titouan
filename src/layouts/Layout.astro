@@ -21,7 +21,29 @@ import "../styles/global.css";
         <option value="Chinstrap">Chinstrap</option>
       </select>
     </nav>
-
+    <nav class="bg-white shadow p-4 mb-6">
+      <ul class="flex justify-center gap-6">
+        <li>
+          <a href="/" class="text-blue-600 hover:underline font-semibold"
+            >Accueil</a
+          >
+        </li>
+        <li>
+          <a
+            href="/all-species"
+            class="text-blue-600 hover:underline font-semibold"
+            >Toutes les espèces</a
+          >
+        </li>
+        <li>
+          <a
+            href="/all-species-tabs"
+            class="text-blue-600 hover:underline font-semibold"
+            >Toutes les espèces (Tabs)</a
+          >
+        </li>
+      </ul>
+    </nav>
     <slot />
 
     <script>
