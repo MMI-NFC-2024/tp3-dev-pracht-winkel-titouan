@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+    <h1>Penguins iframe demo</h1>
+
+    <nav>
+        <a href="/species/Adelie" target="penguin-frame">Adelie</a> |
+        <a href="/species/Gentoo" target="penguin-frame">Gentoo</a> |
+        <a href="/species/Chinstrap" target="penguin-frame">Chinstrap</a>
+    </nav>
+
+    <iframe
+        name="penguin-frame"
+        src="/species/Adelie"
+        style="width:100%; border:none;"
+        onload="this.style.height = this.contentWindow.document.body.scrollHeight + 'px';"
+    ></iframe>
+</Layout>

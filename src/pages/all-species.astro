@@ -1,0 +1,55 @@
+---
+import Layout from "../layouts/Layout.astro";
+import GraphicSpecies from "../components/GraphicSpecies.astro";
+---
+
+<Layout>
+    <div class="max-w-6xl mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-8">All Penguin Species</h1>
+
+        <!-- Menu -->
+        <nav class="flex justify-center gap-6 mb-6">
+            <a
+                href="#Adelie"
+                class="text-blue-600 hover:underline font-semibold">Adelie</a
+            >
+            <a
+                href="#Gentoo"
+                class="text-green-600 hover:underline font-semibold">Gentoo</a
+            >
+            <a
+                href="#Chinstrap"
+                class="text-red-600 hover:underline font-semibold">Chinstrap</a
+            >
+        </nav>
+
+        <!-- Slider -->
+        <div
+            class="flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-4"
+        >
+            <section
+                id="Adelie"
+                class="min-w-full snap-start p-4 bg-gray-50 rounded-lg shadow"
+            >
+                <h2 class="text-xl font-bold mb-4 text-center">Adelie</h2>
+                <GraphicSpecies species="Adelie" />
+            </section>
+
+            <section
+                id="Gentoo"
+                class="min-w-full snap-start p-4 bg-gray-50 rounded-lg shadow"
+            >
+                <h2 class="text-xl font-bold mb-4 text-center">Gentoo</h2>
+                <GraphicSpecies species="Gentoo" />
+            </section>
+
+            <section
+                id="Chinstrap"
+                class="min-w-full snap-start p-4 bg-gray-50 rounded-lg shadow"
+            >
+                <h2 class="text-xl font-bold mb-4 text-center">Chinstrap</h2>
+                <GraphicSpecies species="Chinstrap" />
+            </section>
+        </div>
+    </div>
+</Layout>
