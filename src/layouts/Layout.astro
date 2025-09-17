@@ -1,7 +1,3 @@
----
-import "../styles/global.css";
----
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,11 +9,28 @@ import "../styles/global.css";
   </head>
   <body>
     <nav>
-      <a href="/species/Adelie">Adelie</a> |
-      <a href="/species/Gentoo">Gentoo</a> |
-      <a href="/species/Chinstrap">Chinstrap</a>
+      <label for="species">Choisir une espèce :</label>
+      <select id="species">
+        <option value="">-- Sélectionner --</option>
+        <option value="Adelie">Adelie</option>
+        <option value="Gentoo">Gentoo</option>
+        <option value="Chinstrap">Chinstrap</option>
+      </select>
     </nav>
+
     <slot />
+
+    <script>
+      const select = document.querySelector("#species");
+      if (select) {
+        select.addEventListener("change", (evt) => {
+          const value = evt.target.value;
+          if (value) {
+            location.pathname = "/species/" + value;
+          }
+        });
+      }
+    </script>
   </body>
 </html>
 
