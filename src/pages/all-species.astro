@@ -7,20 +7,17 @@ import GraphicSpecies from "../components/GraphicSpecies.astro";
     <div class="max-w-6xl mx-auto p-6">
         <h1 class="text-3xl font-bold text-center mb-8">All Penguin Species</h1>
 
-        <!-- Menu -->
-        <nav class="flex justify-center gap-6 mb-6">
-            <a
-                href="#Adelie"
-                class="text-blue-600 hover:underline font-semibold">Adelie</a
+        <!-- Menu remplacé par un select -->
+        <nav class="flex justify-center mb-6">
+            <label for="species" class="mr-2 font-semibold"
+                >Choisir une espèce :</label
             >
-            <a
-                href="#Gentoo"
-                class="text-green-600 hover:underline font-semibold">Gentoo</a
-            >
-            <a
-                href="#Chinstrap"
-                class="text-red-600 hover:underline font-semibold">Chinstrap</a
-            >
+            <select id="species" class="border rounded px-2 py-1">
+                <option value="">-- Sélectionner --</option>
+                <option value="Adelie">Adelie</option>
+                <option value="Gentoo">Gentoo</option>
+                <option value="Chinstrap">Chinstrap</option>
+            </select>
         </nav>
 
         <!-- Slider -->
@@ -31,7 +28,9 @@ import GraphicSpecies from "../components/GraphicSpecies.astro";
                 id="Adelie"
                 class="min-w-full snap-start p-4 bg-gray-50 rounded-lg shadow"
             >
-                <h2 class="text-xl font-bold mb-4 text-center">Adelie</h2>
+                <h2 class="text-xl font-bold mb-4 text-center text-blue-600">
+                    Adelie
+                </h2>
                 <GraphicSpecies species="Adelie" />
             </section>
 
@@ -39,7 +38,9 @@ import GraphicSpecies from "../components/GraphicSpecies.astro";
                 id="Gentoo"
                 class="min-w-full snap-start p-4 bg-gray-50 rounded-lg shadow"
             >
-                <h2 class="text-xl font-bold mb-4 text-center">Gentoo</h2>
+                <h2 class="text-xl font-bold mb-4 text-center text-green-600">
+                    Gentoo
+                </h2>
                 <GraphicSpecies species="Gentoo" />
             </section>
 
@@ -47,9 +48,44 @@ import GraphicSpecies from "../components/GraphicSpecies.astro";
                 id="Chinstrap"
                 class="min-w-full snap-start p-4 bg-gray-50 rounded-lg shadow"
             >
-                <h2 class="text-xl font-bold mb-4 text-center">Chinstrap</h2>
+                <h2 class="text-xl font-bold mb-4 text-center text-red-600">
+                    Chinstrap
+                </h2>
                 <GraphicSpecies species="Chinstrap" />
             </section>
         </div>
     </div>
+
+    <!-- Script côté client -->
+    <script is:inline>
+        document.addEventListener("DOMContentLoaded", () => {
+            const select = document.getElementById("species");
+            if (!select) return;
+
+            // Pré-sélection si hash présent
+            if (location.hash) {
+                const current = location.hash.slice(1);
+                if ([...select.options].some((o) => o.value === current)) {
+                    select.value = current;
+                    document
+                        .getElementById(current)
+                        ?.scrollIntoView({ behavior: "smooth" });
+                }
+            }
+
+            // Scroll vers la section choisie au changement
+            select.addEventListener("change", (evt) => {
+                const value = evt.target.value;
+                if (value) {
+                    location.hash = value;
+                    const target = document.getElementById(value);
+                    if (target) {
+                        target.scrollIntoView({ behavior: "smooth" });
+                    } else {
+                        console.warn("Section introuvable:", value);
+                    }
+                }
+            });
+        });
+    </script>
 </Layout>
